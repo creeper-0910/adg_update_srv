@@ -23,6 +23,8 @@ interface API {
 }
 
 const app = new Hono();
+const latest_version = "4.0.826"
+const latest_display_version = "4.0 Nightly 99"
 
 // バージョンの表記方法を定義
 class Version {
@@ -45,8 +47,6 @@ class Version {
   isOlder(version: Version): boolean {
     // バージョン比較関数
     // 与えられたバージョより古い場合はtrueを返す
-    console.log(Number.isInteger(version.patch));
-    console.log(Number.isInteger(this.patch));
     if (this.major !== version.major) {
       return true;
     } else if (this.minor !== version.minor) {
@@ -59,25 +59,30 @@ class Version {
   }
 }
 
+
 app.get("/", (c) => {
+  console.log(c.req.query("app_version"))
+  if (c.req.query("app_version") === undefined) {
+    return c.text("",400);
+  }
   const version = new Version(String(c.req.query("app_version")));
-  const latest = new Version("4.0.819");
+  const latest = new Version(latest_version);
   if (version.isOlder(latest)) {
     const update_url = new URL(
-      "https://github.com/creeper-0910/adg_update_srv/releases/download/4.0.819/adguard_4.0.819.apk",
+      "https://github.com/creeper-0910/adg_update_srv/releases/latest/download/adguard.apk",
     );
 
     const content: API = {
       version: latest.toString(),
       updateURL: update_url.toString(),
       updatePageURL: "https://kb.adguard.com/general/adguard-beta-testing-program",
-      releaseNotes: "これは、AdGuardのNightlyビルドの更新です。このアップデートチャネルは不安定であることをご了承ください。\r\n\r\n## バージョン 4.0 Nightly 97\r\n\r\n* [Fixed] JP Hack!",
+      releaseNotes: "これは、AdGuardのNightlyビルドの更新です。このアップデートチャネルは不安定であることをご了承ください。\r\n\r\n## バージョン "+latest_display_version.toString()+"\r\n\r\n* [Fixed] JP Hack!",
       moreInfoURL: "* [Fixed] JP Hack!",
       forced: false,
       dotnetVersion: null,
       dotnetDownloadLink: null,
       dotnetOfficialLink: null,
-      versionTitle: "4.0 Nightly 99",
+      versionTitle: latest_display_version.toString(),
       major: false,
     };
 

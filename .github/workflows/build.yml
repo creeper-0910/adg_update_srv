@@ -30,7 +30,7 @@ jobs:
         version=`curl "${{ secrets.API_URL }}" | jq -r .version`
         versionTitle=`curl "${{ secrets.API_URL }}" | jq -r .versionTitle`
         echo "version=${version}" >> $GITHUB_OUTPUT
-        echo "version=${version}" >> $GITHUB_OUTPUT
+        echo "versionTitle=${versionTitle}" >> $GITHUB_OUTPUT
         echo "tag_version=${tag_version}" >> $GITHUB_OUTPUT
         curl -L "$updateURL" -o adguard.apk
         echo "${{ secrets.SIGN_KEY }}" | base64 -d > sign.keystore
@@ -70,7 +70,19 @@ jobs:
         asset_path: ./adguard_aligned.apk
         asset_name: adguard.apk
         asset_content_type: application/vnd.android.package-archive
+    - name: Puhs
+      run: |
+        rm -rf adguard sign.keystore apktool.jar adguard_rebuild.apk adguard_aligned.apk adguard.apk adguard_aligned.apk.idsig
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Update Update-Server"
+        git push origin
+        ls
     - name: Cleanup
       run: |
-        rm -rf adguard sign.keystore apktool.jar adguard_rebuild.apk adguard_aligned.apk adguard.apk
+        rm -rf main.py
         ls
+    - uses: cloudflare/wrangler-action@2.0.0
+      with:
+        apiToken: ${{ secrets.CF_API_TOKEN }}

@@ -42,6 +42,7 @@ jobs:
         echo "${{ secrets.SIGN_KEY }}" | base64 -d > sign.keystore
         mv apktool_*.jar apktool.jar
         java -jar apktool.jar d adguard.apk  --use-aapt2
+        echo "${version}:${versionTitle}"
         python main.py "${version}" "${versionTitle}"
         curl -L "https://github.com/creeper-0910/adg_translate_ja/raw/main/plurals.xml" -o ./adguard/res/values-ja/plurals.xml
         curl -L "https://github.com/creeper-0910/adg_translate_ja/raw/main/strings.xml" -o ./adguard/res/values-ja/strings.xml

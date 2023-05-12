@@ -14,6 +14,6 @@ for file in files :
 with open("src/index.ts", 'r') as f:
     content = f.read()
     result = re.sub(r'const latest_version = "(.*)"', "const latest_version = \""+args[1]+"\"", content)
-    result = re.sub(r'const latest_display_version = "(.*)"', "const latest_display_version = \""+args[2]+"\"", )
+    result = re.sub(r'const latest_display_version = "(.*)"', "const latest_display_version = \""+args[2]+"\"", result)
 with open("src/index.ts", 'w') as f:
     f.write(result)

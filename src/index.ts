@@ -23,8 +23,8 @@ interface API {
 }
 
 const app = new Hono();
-const latest_version = "4.0.836"
-const latest_display_version = "4.0 Nightly 102"
+const latest_version = "4.0.843"
+const latest_display_version = "4.0 Nightly 103"
 
 // バージョンの表記方法を定義
 class Version {

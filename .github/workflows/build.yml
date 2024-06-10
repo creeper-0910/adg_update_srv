@@ -47,7 +47,7 @@ jobs:
         curl -L "https://github.com/creeper-0910/adg_translate_ja/raw/main/plurals.xml" -o ./adguard/res/values-ja/plurals.xml
         curl -L "https://github.com/creeper-0910/adg_translate_ja/raw/main/strings.xml" -o ./adguard/res/values-ja/strings.xml
         java -jar apktool.jar b adguard -o adguard_rebuild.apk   --use-aapt2
-        zipalign -f -v 4 adguard_rebuild.apk adguard_aligned.apk
+        zipalign -p -f -v 4 adguard_rebuild.apk adguard_aligned.apk
         apksigner sign --ks sign.keystore --ks-pass ${{ secrets.KEY }} -v adguard_aligned.apk
         cat src/index.ts
       id: version

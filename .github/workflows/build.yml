@@ -20,7 +20,7 @@ jobs:
     - uses: robinraju/release-downloader@v1.8
       with:
         repository: "iBotPeaches/Apktool"
-        tag: "v2.7.0"
+        tag: "v2.9.3"
         fileName: "*.jar"
     - uses: actions/setup-node@v3
       with:

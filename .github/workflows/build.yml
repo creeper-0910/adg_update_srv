@@ -93,7 +93,7 @@ jobs:
       run: |
         rm -rf main.py
         npm i
-    - uses: cloudflare/wrangler-action@3
+    - uses: cloudflare/wrangler-action@v3
       if: steps.version.outputs.tag_version != steps.version.outputs.version
       with:
         apiToken: ${{ secrets.CF_API_TOKEN }}

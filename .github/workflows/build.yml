@@ -22,11 +22,13 @@ jobs:
         repository: "iBotPeaches/Apktool"
         tag: "v2.9.3"
         fileName: "*.jar"
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
+        cache: 'npm'
     - name: sign
       run: |
+        node -v
         tag_version=`git describe --tags --abbrev=0`
         echo "current tag: ${tag_version}"
         echo "tag_version=${tag_version}" >> $GITHUB_OUTPUT
@@ -91,7 +93,7 @@ jobs:
       run: |
         rm -rf main.py
         npm i
-    - uses: cloudflare/wrangler-action@2.0.0
+    - uses: cloudflare/wrangler-action@3
       if: steps.version.outputs.tag_version != steps.version.outputs.version
       with:
         apiToken: ${{ secrets.CF_API_TOKEN }}

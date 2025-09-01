@@ -1,5 +1,6 @@
 name = "upd-adgrd"
 compatibility_date = "2023-01-01"
+account_id = "c417463b18ab159e54364c33d596ae7c"
 # wrangler.toml (wrangler v3.88.0^)
 [observability.logs]
 enabled = false
